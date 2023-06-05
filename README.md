@@ -251,4 +251,224 @@ call CancelOrder(3)
 ```
 
 
+# Part 3
+
+## Task 1
+Little Lemon wants to populate the Bookings table of their database with some records of data. Your first task is to replicate the list of records in the following table by adding them to the Little Lemon booking table.
+
+You can use simple INSERT statements to complete this task
+
+```
+insert into bookings (
+BookingID,
+Date,
+TableNo,
+CostumerID,
+StaffID)
+values
+(5, "2022-10-10", 5, 1, 6),
+(6, "2022-10-10", 3, 3, 2),
+(7, "2022-10-10", 2, 2, 5),
+(8, "2022-10-10", 2, 1, 4)
+```
+
+```
+select * from bookings
+```
+
+## Task 2
+
+For your second task, Little Lemon need you to create a stored procedure called CheckBooking to check whether a table in the restaurant is already booked. Creating this procedure helps to minimize the effort involved in repeatedly coding the same SQL statements.
+
+The procedure should have two input parameters in the form of booking date and table number. You can also create a variable in the procedure to check the status of each table.
+
+
+```
+DELIMITER //
+CREATE PROCEDURE CheckBooking(IN bookDate DATE, IN tableNum INT)
+BEGIN
+  IF EXISTS (select * from bookings where TableNo = tableNum AND Date = bookDate) THEN
+    SELECT CONCAT('Table ', tableNum, ' already booked.') AS message;
+  ELSE
+    SELECT CONCAT('Table available ') AS message;
+  END IF;
+END //
+DELIMITER ;
+```
+
+```
+call CheckBooking("2022-10-10", 8)
+```
+
+## Task 3
+For your third and final task, Little Lemon need to verify a booking, and decline any reservations for tables that are already booked under another name.
+
+Since integrity is not optional, Little Lemon need to ensure that every booking attempt includes these verification and decline steps. However, implementing these steps requires a stored procedure and a transaction.
+
+To implement these steps, you need to create a new procedure called AddValidBooking. This procedure must use a transaction statement to perform a rollback if a customer reserves a table that’s already booked under another name.
+
+Use the following guidelines to complete this task:
+
+The procedure should include two input parameters in the form of booking date and table number.
+
+It also requires at least one variable and should begin with a START TRANSACTION statement.
+
+Your INSERT statement must add a new booking record using the input parameter's values.
+
+Use an IF ELSE statement to check if a table is already booked on the given date.
+
+If the table is already booked, then rollback the transaction. If the table is available, then commit the transaction.
+
+The screenshot below is an example of a rollback (cancelled booking), which was enacted because table number 5 is already booked on the specified date.
+
+
+
+```
+DELIMITER //
+CREATE PROCEDURE AddValidBooking(IN bookDate DATE, IN tableNum INT)
+BEGIN
+  DECLARE result INT DEFAULT 0;
+  IF EXISTS (select * from bookings where TableNo = tableNum AND Date = bookDate) THEN
+    SELECT CONCAT('Table ', tableNum, ' already booked.') AS message;
+  ELSE
+	START TRANSACTION;
+	  SELECT CONCAT('Table available ') AS message;
+	  INSERT INTO bookings (BookingID, Date, TableNo, CostumerID, StaffID) VALUES (9, bookDate, tableNum, 7, 5);
+	  IF ROW_COUNT() > 0 THEN
+		-- success
+		SET result = 1;
+		COMMIT;
+	  ELSE
+		-- failure
+		SET result = 0;
+		ROLLBACK;
+	  END IF;
+  END IF;
+END //
+DELIMITER ;
+```
+
+```
+call AddValidBooking("2022-10-10", 8)
+```
+
+# Part 4
+
+## Task 1
+
+In this first task you need to create a new procedure called AddBooking to add a new table booking record.
+
+The procedure should include four input parameters in the form of the following bookings parameters:
+booking id,
+customer id,
+booking date,
+and table number.
+
+```
+DELIMITER //
+CREATE PROCEDURE AddBooking(
+IN bookingID INT, IN customerID INT, IN bookDate DATE, IN tableNum INT, IN staffID INT)
+BEGIN
+  DECLARE result INT DEFAULT 0;
+  IF EXISTS (select * from bookings where TableNo = tableNum AND Date = bookDate AND BookingID = bookingID) THEN
+    SELECT CONCAT('Table ', tableNum, ' already booked or order duplicated') AS message;
+  ELSE
+	START TRANSACTION;
+	  SELECT CONCAT('Table available ') AS message;
+	  INSERT INTO bookings (BookingID, Date, TableNo, CostumerID, StaffID) VALUES (bookingID, bookDate, tableNum, customerID, staffID);
+	  IF ROW_COUNT() > 0 THEN
+		-- success
+		SET result = 1;
+		COMMIT;
+	  ELSE
+		-- failure
+		SET result = 0;
+		ROLLBACK;
+	  END IF;
+  END IF;
+END //
+DELIMITER ;
+```
+
+```
+call AddBooking(10, 5, "2023-10-11", 3, 5)
+```
+
+## Task 2
+For your second task, Little Lemon need you to create a new procedure called UpdateBooking that they can use to update existing bookings in the booking table.
+
+The procedure should have two input parameters in the form of booking id and booking date. You must also include an UPDATE statement inside the procedure.
+
+The screenshot below shows an example of the UpdateBooking procedure in use.
+
+
+```
+DELIMITER //
+CREATE PROCEDURE UpdateBooking(IN ID INT, IN bookDate DATE)
+BEGIN
+  DECLARE result INT DEFAULT 0;
+  IF EXISTS (select * from bookings where BookingID = bookingID) THEN
+	UPDATE bookings SET Date = bookDate WHERE BookingID = ID;
+    SELECT CONCAT('Booking number ', ID, ' rescheduled to ', bookDate) AS message;
+  ELSE
+	START TRANSACTION;
+	  SELECT CONCAT('Booking doesn\'t exists or is the same date') AS message;
+	  IF ROW_COUNT() > 0 THEN
+		-- success
+		SET result = 1;
+		COMMIT;
+	  ELSE
+		-- failure
+		SET result = 0;
+		ROLLBACK;
+	  END IF;
+  END IF;
+END //
+DELIMITER ;
+```
+
+```
+call UpdateBooking(10, "2023-10-11")
+```
+
+## Task 3
+For the third and final task, Little Lemon need you to create a new procedure called CancelBooking that they can use to cancel or remove a booking.
+
+The procedure should have one input parameter in the form of booking id. You must also write a DELETE statement inside the procedure.
+
+```
+DELIMITER //
+CREATE PROCEDURE CancelBooking(IN ID INT)
+BEGIN
+
+  DECLARE result INT DEFAULT 0;
+  START TRANSACTION;
+  IF EXISTS (select * from bookings where BookingID = ID) THEN
+    DELETE FROM bookings WHERE BookingID = ID;
+  ELSE
+	  IF ROW_COUNT() > 0 THEN
+		-- success
+        SELECT CONCAT('Booking  ', ID, ' cancelled.') AS message;
+		SET result = 1;
+		COMMIT;
+	  ELSE
+		-- failure
+        SELECT CONCAT('Booking doesn\'t exists pr another error ocurred') AS message;
+		SET result = 0;
+		ROLLBACK;
+	  END IF;
+  END IF;
+END //
+DELIMITER ;
+```
+
+```
+call CancelBooking(9)
+```
+
+
+
+
+
+
 
