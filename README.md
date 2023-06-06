@@ -588,5 +588,6 @@ Here is the result for task 5: https://public.tableau.com/app/profile/cesar.oroz
 From the notebook added!
 
 # Part 8: see jupyter woorkbook client.ipynb
+or click here: https://github.com/caesarorz/db-capstone-project/blob/master/client.ipynb
 
 
