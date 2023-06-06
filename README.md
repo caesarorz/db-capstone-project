@@ -466,9 +466,132 @@ DELIMITER ;
 call CancelBooking(9)
 ```
 
+# Part 5
+
+## Task 1
+In this first task, you need to connect to Little Lemon data stored in the Excel Sheet called LittleLemonDB. Then filter data in the data source page and select the United States as the country.
+
+Here’s some guidance for completing this task:
+
+Open Tableau. In the Connection Pane select Excel, then navigate to the data source.
+
+In the data source page, select Filter Tab.
 
 
+## Task 2
+In the second task, you need to create two new data fields called First Name and Last Name. Related values should be extracted from the Full Name field.
+
+Here’s some guidance for completing this task:
+
+You can use the Split feature in Tableau.
+
+Rename the new fields.
 
 
+## Task 3
+For your third task, you need to create a new data field that stores the profits for each sale, or order as shown in the screenshot below.
+
+Here’s some guidance for completing this task:
+
+Select Sales field in the Data Pane, then select Create Calculated field.
+
+Name the calculated field Profit.
+
+Write a formula that deducts Cost from Sales.
+
+Once you complete these tasks you should be ready to perform data analytics and to create visual charts.
+
+# Part 6
+
+## Task 1
+In the first task, you need to create a bar chart that shows customers sales and filter data based on sales with at least $70.
+
+Here’s some guidance for completing this task:
+
+Drag and drop relevant fields from the data pane into the shelves section.
+
+Use a suitable colour scheme.
+
+Filter sales based on sales >= $70.
+
+Name the chart Customers sales.
+
+Answer image:
+<img src="image/customersales1.JPG"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+<hr>
+
+## Task 2
+In the second task, you need to create a line chart to show the sales trend from 2019 to 2022.
+
+Here’s some guidance for completing this task:
+
+Drag and drop relevant fields from the data pane.
+
+Use a suitable colour scheme.
+
+Filter data to exclude 2023.
+
+Name the chart Profit chart.
+
+Answer image:
+<img src="image/profitchart2.JPG"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+
+<hr>
+
+## Task 3
+In the third task, you need to create a Bubble chart of sales for all customers. The chart should show the names of all customers. Once you roll over a bubble, the chart should show the name, profit and sale.
+
+Here’s some guidance for completing this task:
+
+Drag and drop relevant fields from the data pane.
+
+Use a suitable colour scheme.
+
+Name the chart Sales Bubble Chart.
+
+Your chart should show the following Bubble chart.
+
+Answer image:
+<img src="image/salesbubblechart3.JPG"
+     alt="Markdown Monster icon"
+      />
+
+<br>
+
+
+## Task 4
+In this task, you need to compare the sales of the three different cuisines sold at Little Lemon. Create a Bar chart that shows the sales of the Turkish, Italian and Greek cuisines.
+
+You need to display sales data for 2020, 2021, and 2022 only. Each bar should display the profit of each cuisine.
+
+Here’s some guidance for completing this task:
+
+Drag and drop relevant fields from the data pane.
+
+Use a suitable color scheme.
+
+Name the worksheet Cuisine Sales and Profits.
+
+Sort data in descending order by the sum of the sale.
+
+Your chart should be similar to the following example:
+
+Answer image:
+<img src="image/cuisine_sales_profits4.JPG"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
+
+<br>
+
+## Task 5
+In this final task, you need to create an interactive dashboard that combines the Bar chart called Customers sales and the Sales Bubble Chart. Once you click a bar, and roll over the related bubble, the name, sales and profit figures should be displayed in the Bubble chart as shown below.
+
+
+Here is the result for task 5: https://public.tableau.com/app/profile/cesar.orozco4337/viz/MetaCapstone_16860689601270/Dashboard1?publish=yes
 
 
