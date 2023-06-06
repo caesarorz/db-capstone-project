@@ -595,3 +595,10 @@ In this final task, you need to create an interactive dashboard that combines th
 Here is the result for task 5: https://public.tableau.com/app/profile/cesar.orozco4337/viz/MetaCapstone_16860689601270/Dashboard1?publish=yes
 
 
+# Part 7: Set up the client project
+
+From the notebook added!
+
+# Part 8: see jupyter woorkbook client.ipynb
+
+
