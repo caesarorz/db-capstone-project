@@ -559,7 +559,7 @@ Your chart should show the following Bubble chart.
 Answer image:
 <img src="image/salesbubblechart3.JPG"
      alt="Markdown Monster icon"
-      />
+     style="float: left; margin-right: 10px; width:500px; height:500px;" />
 
 <br>
 
@@ -584,7 +584,7 @@ Your chart should be similar to the following example:
 Answer image:
 <img src="image/cuisine_sales_profits4.JPG"
      alt="Markdown Monster icon"
-     style="float: left; margin-right: 10px;" />
+     style="float: left; margin-right: 10px; width:500px; height:500px;" />
 
 <br>
 
