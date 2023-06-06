@@ -174,18 +174,6 @@ Here’s some guidance around completing this task:
 2. The outer query should be used to select the menu name from the menus table.
 3. The inner query should check if any item quantity in the order table is more than 2.
 
-Part 1 (my way)
-```
-select m.Name from orders o
-inner join menu m
-on m.MenuID = o.MenuID
-where o.Quantity > 2
-```
-```
-select * from orders where
-Quantity > 2;
-```
-
 
 Solution
 ```
